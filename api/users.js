@@ -2,7 +2,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-const dbPath = path.resolve(__dirname, 'users.json');
+const dbPath = path.resolve(__dirname, 'users-data.json');
 
 const readDb = async () => {
     try {

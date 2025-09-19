@@ -3,8 +3,12 @@
     "password": "admin8687",
     "role": "admin"
   },
-  "sabil": {
-    "password": "sabil123",
+  "ray": {
+    "password": "ray8687",
+    "role": "user"
+  },
+  "van": {
+    "password": "vansukatobrut",
     "role": "user"
   }
 }

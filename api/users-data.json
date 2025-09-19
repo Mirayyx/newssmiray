@@ -10,5 +10,9 @@
   "van": {
     "password": "vansukatobrut",
     "role": "user"
-  }
+  },
+    "kin": {
+    "password": "kinsukatobrut",
+    "role": "user"
+  },
 }

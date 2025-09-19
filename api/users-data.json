@@ -14,7 +14,10 @@
     "kin": {
     "password": "kinsukatobrut",
     "role": "user"
-  }
-  
+  },
+    "caxy": {
+    "password": "caxysukatobrut",
+    "role": "user"
+  }     
 }  
   

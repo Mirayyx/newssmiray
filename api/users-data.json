@@ -18,6 +18,10 @@
     "caxy": {
     "password": "caxysukatobrut",
     "role": "user"
-  }     
+  },
+    "dapji": {
+    "password":"dapji12",
+    "role": "user"
+  }
 }  
   

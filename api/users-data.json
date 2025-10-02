@@ -24,7 +24,7 @@
     "role": "user"
   },
     "lanzbot": {
-    "password": "lanzbotsukatobrut"
+    "password": "lanzbotsukatobrut",
     "role": "user"
 }
 }  

@@ -22,6 +22,10 @@
     "dapji": {
     "password":"dapji12",
     "role": "user"
-  }
+  },
+    "lanzbot": {
+    "password": "lanzbotsukatobrut"
+    "role": "user"
+    }
 }  
   

@@ -26,6 +26,10 @@
     "lanzbot": {
     "password": "lanzbotsukatobrut",
     "role": "user"
-}
+  },
+    "zeyan": {
+    "password": "sigma12",
+    "role": "user"
+    }   
 }  
   
